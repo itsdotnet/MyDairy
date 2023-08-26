@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDairy.Web", "MyDairy.Web\MyDairy.Web.csproj", "{2EC4C30C-9251-4654-968F-30736CA8E5D0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD1BD071-6E3B-443E-B27F-5FFBDE34CA43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDairy.Web", "src\MyDairy.Web\MyDairy.Web.csproj", "{7780A9C8-D538-49E9-92A2-2CABE4FCD859}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDairy.DAL", "src\MyDairy.DAL\MyDairy.DAL.csproj", "{96206653-2283-44E0-99E9-45FCE1D2436B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDairy.Domain", "src\MyDairy.Domain\MyDairy.Domain.csproj", "{16E95F2F-0523-4714-8CC0-F97D38767852}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDairy.Service", "src\MyDairy.Service\MyDairy.Service.csproj", "{6899E26D-45A5-4FB1-9942-B0420250FCD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +19,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7780A9C8-D538-49E9-92A2-2CABE4FCD859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7780A9C8-D538-49E9-92A2-2CABE4FCD859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7780A9C8-D538-49E9-92A2-2CABE4FCD859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7780A9C8-D538-49E9-92A2-2CABE4FCD859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96206653-2283-44E0-99E9-45FCE1D2436B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96206653-2283-44E0-99E9-45FCE1D2436B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96206653-2283-44E0-99E9-45FCE1D2436B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96206653-2283-44E0-99E9-45FCE1D2436B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16E95F2F-0523-4714-8CC0-F97D38767852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16E95F2F-0523-4714-8CC0-F97D38767852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16E95F2F-0523-4714-8CC0-F97D38767852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E95F2F-0523-4714-8CC0-F97D38767852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6899E26D-45A5-4FB1-9942-B0420250FCD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6899E26D-45A5-4FB1-9942-B0420250FCD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6899E26D-45A5-4FB1-9942-B0420250FCD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6899E26D-45A5-4FB1-9942-B0420250FCD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7780A9C8-D538-49E9-92A2-2CABE4FCD859} = {FD1BD071-6E3B-443E-B27F-5FFBDE34CA43}
+		{96206653-2283-44E0-99E9-45FCE1D2436B} = {FD1BD071-6E3B-443E-B27F-5FFBDE34CA43}
+		{16E95F2F-0523-4714-8CC0-F97D38767852} = {FD1BD071-6E3B-443E-B27F-5FFBDE34CA43}
+		{6899E26D-45A5-4FB1-9942-B0420250FCD7} = {FD1BD071-6E3B-443E-B27F-5FFBDE34CA43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D756BD9-09DF-4827-8E9C-52321CD64176}
