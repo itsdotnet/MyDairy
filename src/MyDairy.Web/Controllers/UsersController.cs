@@ -5,7 +5,7 @@ using MyDairy.Service.Interfaces.Users;
 
 namespace MyDairy.Web.Controllers;
 
-public class UsersController : BaseController
+public class UsersController : Controller
 {
     private readonly IUserService _userService;
 
@@ -18,17 +18,17 @@ public class UsersController : BaseController
     public async Task<IActionResult> Create(UserCreationDto userDto)
     {
         var newUser = await _userService.CreateAsync(userDto);
-        return RedirectToAction(nameof(GetById), new { id = newUser.Id });
+        return View(newUser);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("update")]
     public async Task<IActionResult> Update(UserUpdateDto userDto)
     {
         var updatedUser = await _userService.UpdateAsync(userDto);
-        return RedirectToAction(nameof(GetById), new { id = updatedUser.Id });
+        return View(updatedUser);
     }
 
-    [HttpPatch]
+    [HttpPatch("upload-photo")]
     public async Task<IActionResult> UploadAvatar(long id, [FromForm] AttachmentCreationDto dto)
     {
         await _userService.UploadPhotoAsync(id, dto);

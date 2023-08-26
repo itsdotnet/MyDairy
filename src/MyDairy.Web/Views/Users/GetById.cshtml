@@ -1,7 +1,8 @@
-﻿@model MyDairy.Service.DTOs.Users.UserResultDto
+﻿@using MyDairy.Service.DTOs.Users;
+@model UserResultDto
 
 @{
-    ViewData["Title"] = "My Profile";
+    ViewData["Title"] = "Your Profile";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -12,9 +13,22 @@
     <p><strong>Last Name:</strong> @Model.Lastname</p>
     @if (Model.Image != null)
     {
-        <img src="@Model.Image.FilePath" alt="Profile Image" />
+        <img src="@Model.Image.Path" alt="Profile Image" />
     }
-    <!-- Add other user details here -->
+
+    <!--button for update profile photo-->
+    <form asp-action="UploadAvatar" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="avatar">Avatar Image</label>
+            <input type="file" class="form-control-file" name="dto.File" id="avatar">
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Avatar</button>
+    </form>
+
+    <!--button for delete-->
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
+        <button type="submit" class="btn btn-danger">Delete Account</button>
+    </form>
 </div>
 
 <a asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</a>
