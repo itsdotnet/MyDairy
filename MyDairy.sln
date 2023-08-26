@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDairy.Web", "MyDairy.Web\MyDairy.Web.csproj", "{2EC4C30C-9251-4654-968F-30736CA8E5D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC4C30C-9251-4654-968F-30736CA8E5D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D756BD9-09DF-4827-8E9C-52321CD64176}
+	EndGlobalSection
+EndGlobal
