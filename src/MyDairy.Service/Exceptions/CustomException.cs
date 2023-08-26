@@ -1,4 +1,4 @@
-﻿namespace CloFolio.Service.Exceptions;
+﻿namespace MyDairy.Service.Exceptions;
 
 public class CustomException : Exception
 {

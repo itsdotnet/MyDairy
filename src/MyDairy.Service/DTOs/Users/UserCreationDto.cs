@@ -1,5 +1,4 @@
-﻿using MyDairy.Domain.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MyDairy.Service.DTOs.Users;
 
