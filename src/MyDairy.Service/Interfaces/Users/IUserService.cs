@@ -23,5 +23,5 @@ public interface IUserService
 
     Task<bool> ChangePasswordAsync(long userId, string currentPassword, string newPassword);
 
-    Task<AttachmentResultDto> UploadPhoto(AttachmentCreationDto dto);
+    Task<AttachmentResultDto> UploadPhotoAsync(long userId, AttachmentCreationDto dto);
 }

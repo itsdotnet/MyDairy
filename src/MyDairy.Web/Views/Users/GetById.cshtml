@@ -1,0 +1,20 @@
+﻿@model MyDairy.Service.DTOs.Users.UserResultDto
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <p><strong>Username:</strong> @Model.Username</p>
+    <p><strong>First Name:</strong> @Model.Firstname</p>
+    <p><strong>Last Name:</strong> @Model.Lastname</p>
+    @if (Model.Image != null)
+    {
+        <img src="@Model.Image.FilePath" alt="Profile Image" />
+    }
+    <!-- Add other user details here -->
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</a>
