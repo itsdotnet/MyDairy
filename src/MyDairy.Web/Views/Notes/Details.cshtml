@@ -17,14 +17,19 @@
             }
         </div>
         <div class="card-footer d-flex justify-content-between">
-            <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-primary">Edit Note</a>
+
+            <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-primary ml-auto">Edit Note</a>
 
             <form asp-controller="notes" asp-action="delete" asp-route-id="@Model.Id" method="post"
                   onclick="return confirm('Are you sure you want to delete this note?')">
                 <button type="submit" class="btn btn-danger">Delete Note</button>
             </form>
         </div>
+
     </div>
+</div>
+<div class="back-button">
+    <a asp-controller="users" asp-action="getbyid" asp-route-id="@Model.User.Id" class="btn btn-secondary">Back</a>
 </div>
 
 <style>
@@ -32,5 +37,12 @@
         max-width: 100%;
         height: auto;
         margin-top: 10px;
+    }
+
+    .back-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        margin-right: 9.5%
     }
 </style>
