@@ -53,14 +53,10 @@
                         foreach (var note in Model.Notes)
                         {
                             <div class="note">
-                                <a href="@Url.Action("Details", "Notes", new { id = note.Id })">
-                                    <h6>@note.Title</h6>
-                                    <p>@note.Description</p>
-                                    @if (note.Attachment != null)
-                                    {
-                                        <img src="~/images/@note.Attachment.Name" class="note-image" alt="Note Image">
-                                    }
-                                </a>
+                                <h6>@note.Title</h6>
+                                <p class="note-description">@note.Description.Substring(0, Math.Min(note.Description.Length, 85))...</p>
+                                <p class="note-details" style="display: none;">@note.Description</p>
+                                <a asp-action="details" asp-controller="notes" asp-route-id="@note.Id" class="btn btn-primary">Read more</a>
                             </div>
                         }
                     }
