@@ -11,4 +11,6 @@ public class User : Auditable
 
     public long? AttachmentId { get; set; }
     public Attachment Attachment { get; set; }
+
+    public ICollection<Note> Notes { get; set; }
 }

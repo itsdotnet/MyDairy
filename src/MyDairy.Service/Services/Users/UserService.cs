@@ -71,7 +71,7 @@ public class UserService : IUserService
 
     public async Task<UserResultDto> GetByIdAsync(long id)
     {
-        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == id, new string[] { "Attachment" });
+        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == id, new string[] { "Attachment", "Notes" });
         if (user is null)
             throw new NotFoundException("User not found");
 
