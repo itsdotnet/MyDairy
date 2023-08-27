@@ -71,7 +71,7 @@ public class UsersController : Controller
         return View(users);
     }
 
-    [HttpGet("login")]
+    [HttpPost]
     public async Task<IActionResult> Login(string username,  string password)
     {
         var flag = await _userService.CheckCredentialsAsync(username, password);
