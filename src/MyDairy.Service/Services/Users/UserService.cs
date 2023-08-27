@@ -31,6 +31,7 @@ public class UserService : IUserService
 
         var newUser = mapper.Map<User>(userDto);
         newUser.Password = userDto.Password.Hash();
+        newUser.Username = userDto.Username.ToLower();
 
         var user = await _unitOfWork.UserRepository.AddAsync(newUser);
         var result = await _unitOfWork.SaveAsync();
@@ -97,7 +98,8 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserResultDto>> GetAllByUsernameAsync(string username)
     {
         var users = _unitOfWork.UserRepository
-            .SelectAll(u => u.Username.StartsWith(username.ToLower().Trim()), new string[] { "Attachment" });
+            .SelectAll(u => u.Username.StartsWith(username.ToLower().Trim())
+            || u.Username.ToLower() == username.ToLower().Trim(), new string[] { "Attachment" });
 
         return mapper.Map<IEnumerable<UserResultDto>>(users);
     }
