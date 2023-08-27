@@ -17,15 +17,13 @@ public class UsersController : Controller
     }
 
     [HttpGet("create")]
-    [ActionName("create")]
     public async Task<IActionResult> Create()
     {   
         return View(new UserCreationDto());
     }
 
     [HttpPost("Register")]
-    [ActionName("Register")]
-    public async Task<IActionResult> Register(UserCreationDto userDto)
+    public async Task<IActionResult> Create(UserCreationDto userDto)
     {
         var newUser = await _userService.CreateAsync(userDto);
         return View(newUser);

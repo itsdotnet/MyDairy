@@ -100,7 +100,7 @@ namespace MyDairy.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AttachmentId")
+                    b.Property<long?>("AttachmentId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -156,9 +156,7 @@ namespace MyDairy.DAL.Migrations
                 {
                     b.HasOne("MyDairy.Domain.Entities.Attachment", "Attachment")
                         .WithMany()
-                        .HasForeignKey("AttachmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AttachmentId");
 
                     b.Navigation("Attachment");
                 });

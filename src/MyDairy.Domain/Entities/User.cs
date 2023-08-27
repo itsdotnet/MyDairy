@@ -9,6 +9,6 @@ public class User : Auditable
     public string Username { get; set; }
     public string Password { get; set; }
 
-    public long AttachmentId { get; set; }
+    public long? AttachmentId { get; set; }
     public Attachment Attachment { get; set; }
 }

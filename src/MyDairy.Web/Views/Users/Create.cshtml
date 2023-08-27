@@ -7,7 +7,7 @@
 @using MyDairy.Service.DTOs.Users;
 @model UserCreationDto
 
-<form asp-controller="Users" asp-action="register" method="post">
+<form asp-controller="Users" asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="Firstname">Firstname</label>
         <input type="text" class="form-control" id="Firstname" name="Firstname" placeholder="Enter your name" maxlength="25" required>
