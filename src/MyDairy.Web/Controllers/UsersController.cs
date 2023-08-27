@@ -29,7 +29,7 @@ public class UsersController : Controller
     public async Task<IActionResult> Create(UserCreationDto userDto)
     {
         var newUser = await _userService.CreateAsync(userDto);
-        return RedirectToAction("Index");
+        return RedirectToAction("getbyid", new { newUser.Id });
     }
 
     [HttpGet("update")]

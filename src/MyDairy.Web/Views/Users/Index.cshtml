@@ -12,13 +12,13 @@
     {
         <div class="col-md-4 mb-4">
             <div class="card">
-                @if(@user.Attachment is null)
+                @if (@user.Attachment is null)
                 {
-                    <img id="profile_img" src="~/images/profile_image.jpg" class="card-img-top" alt="User Avatar">
+                    <img id="profile_img" src="~/images/profile_image.jpg" class="card-img-top" alt="User Avatar" width="256" height="256">
                 }
                 else
                 {
-                    <img id="profile_img" src="~/images/@user.Attachment.Name" class="card-img-top" alt="User Avatar">
+                    <img id="profile_img" src="~/images/@user.Attachment.Name" class="card-img-top" alt="User Avatar" width="256" height="256">
                 }
                 <div class="card-body">
                     <h5 class="card-title">@user.Firstname @user.Lastname</h5>
