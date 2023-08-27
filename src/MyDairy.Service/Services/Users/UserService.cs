@@ -75,6 +75,8 @@ public class UserService : IUserService
         if (user is null)
             throw new NotFoundException("User not found");
 
+        user.Notes = user.Notes.Where(u => !u.IsDeleted).ToList();
+
         return mapper.Map<UserResultDto>(user);
     }
 

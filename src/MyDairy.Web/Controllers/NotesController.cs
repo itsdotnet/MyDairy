@@ -55,7 +55,7 @@ public class NotesController : Controller
     public async Task<IActionResult> Update(NoteUpdateDto noteDto)
     {
         var updatedNote = await _noteService.UpdateAsync(noteDto);
-        return RedirectToAction("getbyid", "notes", new { id = updatedNote.Id });
+        return RedirectToAction("details", "notes", new { id = updatedNote.Id });
     }
 
     [HttpPost("delete/{id}")]

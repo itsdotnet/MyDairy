@@ -28,12 +28,12 @@ public class NoteService : INoteService
         if (dto.AttachmentId is not null && attachment is null)
             throw new NotFoundException("Attachment not found");
 
-        var portfolio = _mapper.Map<Note>(dto);
+        var note = _mapper.Map<Note>(dto);
 
-        await _unitOfWork.NoteRepository.AddAsync(portfolio);
+        await _unitOfWork.NoteRepository.AddAsync(note);
         await _unitOfWork.SaveAsync();
 
-        return _mapper.Map<NoteResultDto>(portfolio);
+        return _mapper.Map<NoteResultDto>(note);
     }
 
     public async Task<NoteResultDto> UpdateAsync(NoteUpdateDto dto)
@@ -47,7 +47,7 @@ public class NoteService : INoteService
             throw new NotFoundException("User not found");
 
         var attachment = await _unitOfWork.AttachmentRepository.SelectAsync(a => a.Id == dto.AttachmentId);
-        if (attachment is null)
+        if (dto.AttachmentId is not null && attachment is null)
             throw new NotFoundException("Attachment not found");
 
         _mapper.Map(dto, existingNote);
@@ -60,11 +60,11 @@ public class NoteService : INoteService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var portfolio = await _unitOfWork.NoteRepository.SelectAsync(p => p.Id == id);
-        if (portfolio is null)
+        var note = await _unitOfWork.NoteRepository.SelectAsync(p => p.Id == id);
+        if (note is null)
             throw new NotFoundException("Note not found");
 
-        await _unitOfWork.NoteRepository.DeleteAsync(p => p == portfolio);
+        await _unitOfWork.NoteRepository.DeleteAsync(p => p == note);
         await _unitOfWork.SaveAsync();
 
         return true;
@@ -72,31 +72,31 @@ public class NoteService : INoteService
 
     public async Task<NoteResultDto> GetByIdAsync(long id)
     {
-        var portfolio = await _unitOfWork.NoteRepository.SelectAsync(p => p.Id == id, new string[] { "User", "Attachment" });
-        if (portfolio is null)
+        var note = await _unitOfWork.NoteRepository.SelectAsync(p => p.Id == id, new string[] { "User", "Attachment" });
+        if (note is null)
             throw new NotFoundException("Note not found");
 
-        return _mapper.Map<NoteResultDto>(portfolio);
+        return _mapper.Map<NoteResultDto>(note);
     }
 
     public async Task<IEnumerable<NoteResultDto>> GetAllAsync()
     {
-        var portfolios = _unitOfWork.NoteRepository.SelectAll();
-        return _mapper.Map<IEnumerable<NoteResultDto>>(portfolios);
+        var notes = _unitOfWork.NoteRepository.SelectAll();
+        return _mapper.Map<IEnumerable<NoteResultDto>>(notes);
     }
 
 
     public async Task<IEnumerable<NoteResultDto>> GetAllByUserIdAsync(long userId)
     {
-        var portfolios = _unitOfWork.NoteRepository.SelectAll(p => p.UserId == userId);
-        return _mapper.Map<IEnumerable<NoteResultDto>>(portfolios);
+        var notes = _unitOfWork.NoteRepository.SelectAll(p => p.UserId == userId);
+        return _mapper.Map<IEnumerable<NoteResultDto>>(notes);
     }
 
     public async Task<IEnumerable<NoteResultDto>> GetAllByTitleAsync(string title)
     {
-        var portfolios = _unitOfWork.NoteRepository.SelectAll(p =>
+        var notes = _unitOfWork.NoteRepository.SelectAll(p =>
             p.Title.Contains(title));
 
-        return _mapper.Map<IEnumerable<NoteResultDto>>(portfolios);
+        return _mapper.Map<IEnumerable<NoteResultDto>>(notes);
     }
 }

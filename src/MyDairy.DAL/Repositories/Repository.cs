@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MyDairy.DAL.Constexts;
 using MyDairy.DAL.IRepositories;
 using MyDairy.Domain.Commons;
+using MyDairy.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace MyDairy.DAL.Repositories;
@@ -46,13 +47,11 @@ public class Repository<T> : IRepository<T> where T : Auditable
         var query = expression is null ? isTracking ? table : table.AsNoTracking()
             : isTracking ? table.Where(expression) : table.Where(expression).AsNoTracking();
 
-        query = query.Where(t => !t.IsDeleted);
-
         if (includes is not null)
             foreach (var include in includes)
                 query = query.Include(include);
-
-        return query;
+        
+        return query.Where(i => !i.IsDeleted);
     }
 
     public async ValueTask<T> UpdateAsync(T entity)
