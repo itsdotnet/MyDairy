@@ -105,7 +105,8 @@ public class UsersController : Controller
         if (flag)
         {
             var user = (await _userService.GetAllByUsernameAsync(loginView.Username)).FirstOrDefault();
-            return RedirectToAction("getbyid", new { id = user.Id});
+            if(user is not null)
+                return RedirectToAction("getbyid", new { id = user.Id});
         }
 
         return RedirectToAction("login");
