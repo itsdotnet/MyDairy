@@ -47,22 +47,26 @@
             </div>
         </div>
 
-        <!-- Right Side: Notes -->
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Notes</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title">Notes</h5>
+                        <a asp-controller="Notes" asp-action="Create" asp-route-userId="@Model.Id" class="btn btn-primary">Create Note</a>
+                    </div>
                     @if (Model.Notes != null && Model.Notes.Count > 0)
                     {
                         foreach (var note in Model.Notes)
                         {
                             <div class="note">
-                                <h6>@note.Title</h6>
-                                <p>@note.Description</p>
-                                @if (note.Attachment != null)
-                                {
-                                    <img src="~/images/@note.Attachment.Name" class="note-image" alt="Note Image">
-                                }
+                                <a href="@Url.Action("Details", "Notes", new { id = note.Id })">
+                                    <h6>@note.Title</h6>
+                                    <p>@note.Description</p>
+                                    @if (note.Attachment != null)
+                                    {
+                                        <img src="~/images/@note.Attachment.Name" class="note-image" alt="Note Image">
+                                    }
+                                </a>
                             </div>
                         }
                     }
@@ -73,8 +77,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 <style>
     .profile-image-container {

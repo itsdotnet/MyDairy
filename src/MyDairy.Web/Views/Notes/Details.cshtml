@@ -1,0 +1,34 @@
+﻿@model MyDairy.Service.DTOs.Notes.NoteResultDto
+
+@{
+    ViewData["Title"] = "Note Details";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">@Model.Title</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">@Model.Description</p>
+            @if (Model.Attachment != null)
+            {
+                <img src="~/images/@Model.Attachment.Name" class="note-image" alt="Note Image">
+            }
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Note</a>
+            
+            <a asp-controller="notes" asp-action="Delete" asp-route-id="@Model.Id" method="post" class="btn btn-danger"
+               onclick="return confirm('Are you sure you want to delete this note?')">Delete Note</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .note-image {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
+</style>

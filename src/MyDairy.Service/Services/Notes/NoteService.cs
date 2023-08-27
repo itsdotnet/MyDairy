@@ -18,17 +18,17 @@ public class NoteService : INoteService
         _mapper = mapper;
     }
 
-    public async Task<NoteResultDto> CreateAsync(NoteCreationDto portfolioDto)
+    public async Task<NoteResultDto> CreateAsync(NoteCreationDto dto)
     {
-        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == portfolioDto.UserId);
+        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == dto.UserId);
         if (user is null)
             throw new NotFoundException("User not found");
 
-        var attachment = await _unitOfWork.AttachmentRepository.SelectAsync(a => a.Id == portfolioDto.AttachmentId);
-        if (attachment is null)
+        var attachment = await _unitOfWork.AttachmentRepository.SelectAsync(a => a.Id == dto.AttachmentId);
+        if (dto.AttachmentId is not null && attachment is null)
             throw new NotFoundException("Attachment not found");
 
-        var portfolio = _mapper.Map<Note>(portfolioDto);
+        var portfolio = _mapper.Map<Note>(dto);
 
         await _unitOfWork.NoteRepository.AddAsync(portfolio);
         await _unitOfWork.SaveAsync();
@@ -36,21 +36,21 @@ public class NoteService : INoteService
         return _mapper.Map<NoteResultDto>(portfolio);
     }
 
-    public async Task<NoteResultDto> UpdateAsync(NoteUpdateDto portfolioDto)
+    public async Task<NoteResultDto> UpdateAsync(NoteUpdateDto dto)
     {
-        var existingNote = await _unitOfWork.NoteRepository.SelectAsync(p => p.Id == portfolioDto.Id);
+        var existingNote = await _unitOfWork.NoteRepository.SelectAsync(p => p.Id == dto.Id);
         if (existingNote is null)
             throw new NotFoundException("Note not found");
 
-        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == portfolioDto.UserId);
+        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == dto.UserId);
         if (user is null)
             throw new NotFoundException("User not found");
 
-        var attachment = await _unitOfWork.AttachmentRepository.SelectAsync(a => a.Id == portfolioDto.AttachmentId);
+        var attachment = await _unitOfWork.AttachmentRepository.SelectAsync(a => a.Id == dto.AttachmentId);
         if (attachment is null)
             throw new NotFoundException("Attachment not found");
 
-        _mapper.Map(portfolioDto, existingNote);
+        _mapper.Map(dto, existingNote);
 
         await _unitOfWork.NoteRepository.UpdateAsync(existingNote);
         await _unitOfWork.SaveAsync();

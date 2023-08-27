@@ -1,83 +1,68 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MyDairy.Service.DTOs.Notes;
+using MyDairy.Service.Interfaces.Notes;
 
-namespace MyDairy.Web.Controllers
+namespace MyDairy.Web.Controllers;
+
+[Route("notes")]
+public class NotesController : Controller
 {
-    public class NotesController : Controller
+    private readonly INoteService _noteService;
+    private readonly IMapper _mapper;
+
+    public NotesController(INoteService noteService, IMapper mapper)
     {
-        // GET: NotesController
-        public ActionResult Index()
-        {
-            return View();
-        }
+        _noteService = noteService;
+        _mapper = mapper;
+    }
 
-        // GET: NotesController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+    public async Task<IActionResult> Index()
+    {
+        var notes = await _noteService.GetAllAsync();
+        return View(notes);
+    }
 
-        // GET: NotesController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+    [HttpGet("details")]
+    public async Task<IActionResult> Details(long id)
+    {
+        var note = await _noteService.GetByIdAsync(id);
+        return View(note);
+    }
 
-        // POST: NotesController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    [HttpGet("create")]
+    public IActionResult Create(long userId)
+    {
+        return View(new NoteCreationDto() { UserId = userId });
+    }
 
-        // GET: NotesController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+    [HttpPost("create")]
+    public async Task<IActionResult> Create(NoteCreationDto noteDto)
+    {
+        var createdNote = await _noteService.CreateAsync(noteDto);
+        return RedirectToAction(nameof(Details), new { id = createdNote.Id });
+    }
 
-        // POST: NotesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    [HttpGet("update")]
+    public async Task<IActionResult> Update(long id)
+    {
+        var note = await _noteService.GetByIdAsync(id);
+        var mappedNote = _mapper.Map<NoteUpdateDto>(note);
+        return View(mappedNote);
+    }
 
-        // GET: NotesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+    [HttpPost("update")]
+    public async Task<IActionResult> Update(NoteUpdateDto noteDto)
+    {
+        var updatedNote = await _noteService.UpdateAsync(noteDto);
+        return RedirectToAction("getbyid", "notes", new { id = updatedNote.Id });
+    }
 
-        // POST: NotesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    [HttpPost("delete/{id}")]
+    public async Task<IActionResult> Delete(long id)
+    {
+        var note = await _noteService.GetByIdAsync(id);
+        await _noteService.DeleteAsync(id);
+        return RedirectToAction("getbyid", "users", new { id = note.User.Id });
     }
 }

@@ -22,7 +22,7 @@ public class MappingProfile : Profile
         CreateMap<NoteCreationDto, Note>().ReverseMap();
         CreateMap<NoteUpdateDto, Note>().ReverseMap();
         CreateMap<Note, NoteResultDto>().ReverseMap();
-        CreateMap<UserUpdateDto, NoteResultDto>().ReverseMap();
+        CreateMap<NoteResultDto, NoteUpdateDto>().ReverseMap();
 
         //attachment
 

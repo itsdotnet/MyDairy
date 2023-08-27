@@ -8,5 +8,5 @@ public class NoteCreationDto
 
     public long UserId { get; set; }
 
-    public long AttachmentId { get; set; }
+    public long? AttachmentId { get; set; }
 }

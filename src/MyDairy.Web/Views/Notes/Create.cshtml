@@ -1,0 +1,30 @@
+﻿@model MyDairy.Service.DTOs.Notes.NoteCreationDto
+
+@{
+    ViewData["Title"] = "Create New Note";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create New Note</h5>
+                    <form asp-controller="Notes" asp-action="Create" method="post">
+                        <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+                        <div class="form-group">
+                            <label asp-for="Title">Title</label>
+                            <input type="text" class="form-control" id="Title" name="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description">Description</label>
+                            <textarea class="form-control" id="Description" name="Description" rows="3" required></textarea>
+                        </div>
+                        <p></p>
+                        <button type="submit" class="btn btn-primary">Create Note</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
