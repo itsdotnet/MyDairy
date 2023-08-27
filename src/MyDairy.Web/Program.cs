@@ -13,9 +13,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyDairyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//add jwt
-builder.Services.AddJwt(builder.Configuration);
-
 //add log
 var logger = new LoggerConfiguration()
         .ReadFrom.Configuration(builder.Configuration)

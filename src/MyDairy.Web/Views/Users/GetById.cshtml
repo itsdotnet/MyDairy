@@ -26,7 +26,8 @@
                     </form>
 
                     <!-- Button for deleting account -->
-                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
+                    <form asp-controller="users" asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
+                        @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-danger mt-3">Delete Account</button>
                     </form>
 

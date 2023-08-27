@@ -5,6 +5,8 @@ using MyDairy.Service.Interfaces.Users;
 
 namespace MyDairy.Web.Controllers;
 
+[Route("users")]
+[AutoValidateAntiforgeryToken]
 public class UsersController : Controller
 {
     private readonly IUserService _userService;
@@ -14,8 +16,16 @@ public class UsersController : Controller
         _userService = userService;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create(UserCreationDto userDto)
+    [HttpGet("create")]
+    [ActionName("create")]
+    public async Task<IActionResult> Create()
+    {   
+        return View(new UserCreationDto());
+    }
+
+    [HttpPost("Register")]
+    [ActionName("Register")]
+    public async Task<IActionResult> Register(UserCreationDto userDto)
     {
         var newUser = await _userService.CreateAsync(userDto);
         return View(newUser);
@@ -36,21 +46,23 @@ public class UsersController : Controller
         return RedirectToAction(nameof(GetById), new { id });
     }
 
-    [HttpDelete("{id}")]
+
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete(long id)
     {
         await _userService.DeleteAsync(id);
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("index", "users");
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("getbyid/{id}")]
     public async Task<IActionResult> GetById(long id)
     {
         var user = await _userService.GetByIdAsync(id);
-        return View(user); 
+        return View(user);
     }
 
-    [HttpGet]
+    [HttpGet("getall")]
+    [ActionName("index")]
     public async Task<IActionResult> GetAll()
     {
         var users = await _userService.GetAllAsync();
@@ -71,8 +83,14 @@ public class UsersController : Controller
         return View(users);
     }
 
+    [HttpGet("login")]
+    public async Task<IActionResult> Login()
+    {
+        return View();
+    }
+
     [HttpPost]
-    public async Task<IActionResult> Login(string username,  string password)
+    public async Task<IActionResult> Login(string username, string password)
     {
         var flag = await _userService.CheckCredentialsAsync(username, password);
         if (flag)
