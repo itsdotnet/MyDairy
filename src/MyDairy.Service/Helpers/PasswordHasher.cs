@@ -4,8 +4,7 @@ public static class PasswordHasher
 {
     public static string Hash(this string password)
     {
-        string salt = Guid.NewGuid().ToString();
-        string hash = BCrypt.Net.BCrypt.HashPassword(password + salt);
+        string hash = BCrypt.Net.BCrypt.HashPassword(password);
         return hash;
     }
 

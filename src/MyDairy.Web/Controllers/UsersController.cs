@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDairy.Service.DTOs.Attachment;
 using MyDairy.Service.DTOs.Users;
 using MyDairy.Service.Interfaces.Users;
+using MyDairy.Web.Models;
 
 namespace MyDairy.Web.Controllers;
 
@@ -9,9 +11,11 @@ namespace MyDairy.Web.Controllers;
 public class UsersController : Controller
 {
     private readonly IUserService _userService;
+    private readonly IMapper _mapper;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, IMapper mapper)
     {
+        _mapper = mapper;
         _userService = userService;
     }
 
@@ -28,14 +32,22 @@ public class UsersController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpPut("update")]
+    [HttpGet("update")]
+    public async Task<IActionResult> Update(long Id)
+    {
+        var user = await _userService.GetByIdAsync(Id);
+        var mappedUser = _mapper.Map<UserUpdateDto>(user);
+        return View(mappedUser);
+    }
+
+    [HttpPost("update")]
     public async Task<IActionResult> Update(UserUpdateDto userDto)
     {
         var updatedUser = await _userService.UpdateAsync(userDto);
-        return View(updatedUser);
+        return RedirectToAction("GetById", new { id = updatedUser.Id });
     }
 
-    [HttpPatch("upload-photo")]
+    [HttpPost("upload-photo")]
     public async Task<IActionResult> UploadAvatar(long id, [FromForm] AttachmentCreationDto dto)
     {
         await _userService.UploadPhotoAsync(id, dto);
@@ -43,19 +55,13 @@ public class UsersController : Controller
         return RedirectToAction(nameof(GetById), new { id });
     }
 
-    [HttpPost("deletepage/{id}")]
-    public async Task<IActionResult> DeletePage(long id)
-    {
-        return View(id);
-    }
-
-    [HttpDelete("delete/{id}")]
+    [HttpPost("delete/{id}")]
     public async Task<IActionResult> Delete(long id)
     {
         await _userService.DeleteAsync(id);
         return RedirectToAction("index", "users");
     }
-    
+
     [HttpGet("getbyid/{id}")]
     public async Task<IActionResult> GetById(long id)
     {
@@ -88,16 +94,20 @@ public class UsersController : Controller
     [HttpGet("login")]
     public async Task<IActionResult> Login()
     {
-        return View();
+        var model = new LoginViewModel();
+        return View(model);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Login(string username, string password)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginViewModel loginView)
     {
-        var flag = await _userService.CheckCredentialsAsync(username, password);
+        var flag = await _userService.CheckCredentialsAsync(loginView.Username,loginView.Password);
         if (flag)
-            return RedirectToAction("getbyid");
+        {
+            var user = (await _userService.GetAllByUsernameAsync(loginView.Username)).FirstOrDefault();
+            return RedirectToAction("getbyid", new { id = user.Id});
+        }
 
-        return RedirectToAction("index");
+        return RedirectToAction("login");
     }
 }

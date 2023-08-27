@@ -22,7 +22,7 @@ public class AttachmentService : IAttachmentService
 
     public async Task<AttachmentResultDto> CreateAsync(AttachmentCreationDto attachmentDto)
     {
-        var webrootPath = Path.Combine(PathHelper.WebRootPath, "Portfolios");
+        var webrootPath = Path.Combine(PathHelper.WebRootPath, "images");
 
         if (!Directory.Exists(webrootPath))
             Directory.CreateDirectory(webrootPath);
