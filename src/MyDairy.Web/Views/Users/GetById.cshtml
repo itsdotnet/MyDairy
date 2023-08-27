@@ -36,11 +36,6 @@
                         <button type="submit" class="btn btn-primary">Upload Photo</button>
                     </form>
 
-                    <!-- Button for deleting account -->
-                    <form asp-controller="users" asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
-                        <button type="submit" class="btn btn-danger mt-3">Delete Account</button>
-                    </form>
-
                     <!-- Link to edit profile -->
                     <a asp-controller="users" asp-action="update" asp-route-id="@Model.Id" method="get" class="btn btn-secondary mt-3">Edit Profile</a>
                 </div>
