@@ -1,0 +1,24 @@
+﻿@using MyDairy.Service.DTOs.Users;
+@model IEnumerable<UserResultDto>
+
+@{
+    ViewData["Title"] = "GetAll";
+}
+
+<h1>All users</h1>
+
+<div class="row">
+    @foreach (var user in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img id="profile_img" src="~/images/@user.Attachment.Name" class="card-img-top" alt="User Avatar">
+                <div class="card-body">
+                    <h5 class="card-title">@user.Firstname @user.Lastname</h5>
+                    <p class="card-text">@user.Username</p>
+                    <a href="@Url.Action("GetById", "Users", new { id = user.Id })" class="btn btn-primary">View Profile</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

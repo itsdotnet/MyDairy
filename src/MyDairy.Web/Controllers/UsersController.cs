@@ -70,4 +70,14 @@ public class UsersController : Controller
         var users = await _userService.GetAllByUsernameAsync(username);
         return View(users);
     }
+
+    [HttpGet("login")]
+    public async Task<IActionResult> Login(string username,  string password)
+    {
+        var flag = await _userService.CheckCredentialsAsync(username, password);
+        if (flag)
+            return RedirectToAction("getall", "notes");
+
+        return RedirectToAction("index", "home");
+    }
 }

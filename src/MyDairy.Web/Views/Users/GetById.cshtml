@@ -5,30 +5,73 @@
     ViewData["Title"] = "Your Profile";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="profile-image-container">
+                    <img src="~/images/@Model.Attachment.Name" class="card-img-top profile-image" alt="Profile Image">
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@Model.Username</p>
+                    <p class="card-text">@Model.Firstname @Model.Lastname</p>
 
-<div>
-    <p><strong>Username:</strong> @Model.Username</p>
-    <p><strong>First Name:</strong> @Model.Firstname</p>
-    <p><strong>Last Name:</strong> @Model.Lastname</p>
-    @if (Model.Image != null)
-    {
-        <img src="@Model.Image.Path" alt="Profile Image" />
-    }
+                    <!-- Button for updating profile photo -->
+                    <form asp-action="UploadAvatar" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="avatar">Update Profile Photo</label>
+                        </div>
+                        <p></p>
+                        <button type="submit" class="btn btn-primary">Upload Photo</button>
+                    </form>
 
-    <!--button for update profile photo-->
-    <form asp-action="UploadAvatar" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="avatar">Avatar Image</label>
-            <input type="file" class="form-control-file" name="dto.File" id="avatar">
+                    <!-- Button for deleting account -->
+                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
+                        <button type="submit" class="btn btn-danger mt-3">Delete Account</button>
+                    </form>
+
+                    <!-- Link to edit profile -->
+                    <a asp-controller="users" asp-action="update" asp-route-id="@Model.Id" class="btn btn-secondary mt-3">Edit Profile</a>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Upload Avatar</button>
-    </form>
-
-    <!--button for delete-->
-    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
-        <button type="submit" class="btn btn-danger">Delete Account</button>
-    </form>
+    </div>
 </div>
 
-<a asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</a>
+<style>
+    .profile-image-container {
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .input-group .custom-file-input::after {
+        content: "Browse";
+    }
+
+    .input-group .custom-file-input::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+
+    .input-group .custom-file-input::before {
+        content: "Upload";
+        display: inline-block;
+        background: linear-gradient(top, #f9f9f9, #e3e3e3);
+        border: 1px solid #999;
+        border-radius: 3px;
+        padding: 5px 8px;
+        outline: none;
+        white-space: nowrap;
+        -webkit-user-select: none;
+        cursor: pointer;
+        text-shadow: 1px 1px #fff;
+        font-weight: 700;
+        font-size: 10pt;
+    }
+</style>

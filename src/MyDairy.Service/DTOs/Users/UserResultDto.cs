@@ -13,7 +13,7 @@ public class UserResultDto
 
     public string Username { get; set; }
 
-    public AttachmentResultDto Image { get; set; }
+    public AttachmentResultDto Attachment { get; set; }
 
     public string Password { get; set; }
 }

@@ -71,7 +71,7 @@ public class UserService : IUserService
 
     public async Task<UserResultDto> GetByIdAsync(long id)
     {
-        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == id);
+        var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == id, new string[] { "Attachment" });
         if (user is null)
             throw new NotFoundException("User not found");
 
@@ -80,14 +80,14 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserResultDto>> GetAllAsync()
     {
-        var users = _unitOfWork.UserRepository.SelectAll();
+        var users = _unitOfWork.UserRepository.SelectAll(null, new string[] { "Attachment" });
         return mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 
     public async Task<IEnumerable<UserResultDto>> GetAllByNameAsync(string name)
     {
         var users = _unitOfWork.UserRepository.SelectAll(u =>
-            u.Firstname.Contains(name) || u.Lastname.Contains(name));
+            u.Firstname.Contains(name) || u.Lastname.Contains(name), new string[] { "Attachment" });
 
         return mapper.Map<IEnumerable<UserResultDto>>(users);
     }
@@ -95,7 +95,7 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserResultDto>> GetAllByUsernameAsync(string username)
     {
         var users = _unitOfWork.UserRepository
-            .SelectAll(u => u.Username.StartsWith(username.ToLower().Trim()));
+            .SelectAll(u => u.Username.StartsWith(username.ToLower().Trim()), new string[] { "Attachment" });
 
         return mapper.Map<IEnumerable<UserResultDto>>(users);
     }
