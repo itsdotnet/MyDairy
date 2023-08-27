@@ -142,7 +142,7 @@ namespace MyDairy.DAL.Migrations
                         .HasForeignKey("AttachmentId");
 
                     b.HasOne("MyDairy.Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Notes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -159,6 +159,11 @@ namespace MyDairy.DAL.Migrations
                         .HasForeignKey("AttachmentId");
 
                     b.Navigation("Attachment");
+                });
+
+            modelBuilder.Entity("MyDairy.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618
         }

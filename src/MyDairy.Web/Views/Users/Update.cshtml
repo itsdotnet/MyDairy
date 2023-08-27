@@ -22,12 +22,21 @@
         <input type="text" class="form-control" id="Username" name="Username" value="@Model.Username" maxlength="25" required>
     </div>
     <p></p>
-    <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-primary mt-3">Save</button>
-
-        <!-- Button for deleting account -->
-        <form asp-controller="users" asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
-            <button type="submit" class="btn btn-danger mt-3">Delete Account</button>
-        </form>
-    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
 </form>
+
+<div class="delete-button">
+    <!-- Button for deleting account -->
+    <form asp-controller="users" asp-action="delete" asp-route-id="@Model.Id" method="post"
+                onclick="return confirm('Are you sure you want to delete Account?')">
+            <button type="submit" class="btn btn-danger">Delete Account</button>
+</form>
+</div>
+
+<style>
+    .delete-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+</style>

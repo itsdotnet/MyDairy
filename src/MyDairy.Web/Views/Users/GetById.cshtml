@@ -25,12 +25,11 @@
                     <p class="card-text">@Model.Username</p>
                     <p class="card-text">@Model.Firstname @Model.Lastname</p>
 
-                    <!-- Button for updating profile photo -->
                     <form asp-action="UploadAvatar" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="avatar">Avatar Image</label>
                             <p></p>
-                            <input type="file" class="form-control-file" name="dto.File" id="avatar">
+                            <input type="file" class="form-control-file" name="dto.File" id="avatar" required>
                         </div>
                         <p></p>
                         <button type="submit" class="btn btn-primary">Upload Photo</button>
