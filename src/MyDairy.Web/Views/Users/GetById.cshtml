@@ -10,7 +10,14 @@
         <div class="col-md-4 offset-md-4">
             <div class="card">
                 <div class="profile-image-container">
-                    <img src="~/images/@Model.Attachment.Name" class="card-img-top profile-image" alt="Profile Image">
+                    @if (@Model.Attachment is null)
+                    {
+                        <img class="card-img-top profile-image" src="~/images/profile_image.jpg" alt="User Avatar">
+                    }
+                    else
+                    {
+                        <img src="~/images/@Model.Attachment.Name" class="card-img-top profile-image" alt="Profile Image">
+                    }
                 </div>
                 <div class="card-body">
                     <p class="card-text">@Model.Username</p>
@@ -26,8 +33,7 @@
                     </form>
 
                     <!-- Button for deleting account -->
-                    <form asp-controller="users" asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete your account?')">
-                        @Html.AntiForgeryToken()
+                    <form asp-controller="users" asp-action="DeletePage" asp-route-id="@Model.Id" method="get" onsubmit="return confirm('Are you sure you want to delete your account?')">
                         <button type="submit" class="btn btn-danger mt-3">Delete Account</button>
                     </form>
 

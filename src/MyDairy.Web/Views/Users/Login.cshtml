@@ -3,9 +3,7 @@
 }
 
 <h1>Login</h1>
-
-@using (Html.BeginForm("Login", "Users", FormMethod.Post))
-{
+<form asp-controller="Users" asp-action="login" method="post">
     <div class="form-group">
         <label for="Username">Username</label>
         <input type="text" class="form-control" id="Username" name="Username" placeholder="Enter your username" required>
@@ -16,4 +14,4 @@
     </div>
     <p></p>
     <button type="submit" class="btn btn-primary">Login</button>
-}
+</form>

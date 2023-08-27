@@ -12,11 +12,18 @@
     {
         <div class="col-md-4 mb-4">
             <div class="card">
-                <img id="profile_img" src="~/images/@user.Attachment.Name" class="card-img-top" alt="User Avatar">
+                @if(@user.Attachment is null)
+                {
+                    <img id="profile_img" src="~/images/profile_image.jpg" class="card-img-top" alt="User Avatar">
+                }
+                else
+                {
+                    <img id="profile_img" src="~/images/@user.Attachment.Name" class="card-img-top" alt="User Avatar">
+                }
                 <div class="card-body">
                     <h5 class="card-title">@user.Firstname @user.Lastname</h5>
                     <p class="card-text">@user.Username</p>
-                    <a href="@Url.Action("GetById", "Users", new { id = user.Id })" class="btn btn-primary">View Profile</a>
+                    <a href="@Url.Action("Login", "Users")" class="btn btn-primary">View Profile</a>
                 </div>
             </div>
         </div>

@@ -6,7 +6,6 @@ using MyDairy.Service.Interfaces.Users;
 namespace MyDairy.Web.Controllers;
 
 [Route("users")]
-[AutoValidateAntiforgeryToken]
 public class UsersController : Controller
 {
     private readonly IUserService _userService;
@@ -18,15 +17,15 @@ public class UsersController : Controller
 
     [HttpGet("create")]
     public async Task<IActionResult> Create()
-    {   
+    {
         return View(new UserCreationDto());
     }
 
-    [HttpPost("Register")]
+    [HttpPost("create")]
     public async Task<IActionResult> Create(UserCreationDto userDto)
     {
         var newUser = await _userService.CreateAsync(userDto);
-        return View(newUser);
+        return RedirectToAction("Index");
     }
 
     [HttpPut("update")]
@@ -44,6 +43,11 @@ public class UsersController : Controller
         return RedirectToAction(nameof(GetById), new { id });
     }
 
+    [HttpPost("deletepage/{id}")]
+    public async Task<IActionResult> DeletePage(long id)
+    {
+        return View(id);
+    }
 
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete(long id)
@@ -51,7 +55,7 @@ public class UsersController : Controller
         await _userService.DeleteAsync(id);
         return RedirectToAction("index", "users");
     }
-
+    
     [HttpGet("getbyid/{id}")]
     public async Task<IActionResult> GetById(long id)
     {
@@ -92,8 +96,8 @@ public class UsersController : Controller
     {
         var flag = await _userService.CheckCredentialsAsync(username, password);
         if (flag)
-            return RedirectToAction("getall", "notes");
+            return RedirectToAction("getbyid");
 
-        return RedirectToAction("index", "home");
+        return RedirectToAction("index");
     }
 }
