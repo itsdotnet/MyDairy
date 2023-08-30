@@ -83,7 +83,7 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserResultDto>> GetAllAsync()
     {
-        var users = _unitOfWork.UserRepository.SelectAll(null, new string[] { "Attachment" });
+        var users = _unitOfWork.UserRepository.SelectAll(null, new string[] { "Attachment", "Notes" });
         return mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 

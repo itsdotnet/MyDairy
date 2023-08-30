@@ -1,31 +1,155 @@
-﻿@using MyDairy.Service.DTOs.Users;
+﻿@using MyDairy.Domain.Entities;
+@using MyDairy.Service.DTOs.Users;
 @model IEnumerable<UserResultDto>
 
 @{
     ViewData["Title"] = "GetAll";
+    UserResultDto currentUser = new UserResultDto();
+
 }
 
-<h1>All users</h1>
+<div class="main-container border border-dark w-100 h-100">
+    <div class="users-container col">
+        <div class="nav-bar">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <button class="btn"><i class="fa fa-bars"></i></button>
 
-<div class="row">
-    @foreach (var user in Model)
-    {
-        <div class="col-md-4 mb-4">
+            <div class="form-outline mb-3">
+                <input type="search" class="form-control" style="margin-top:7%; margin-left:0%" id="data-search">
+            </div>
+        </div>
+        <ul class="user-list" id="users">
+            @foreach (var user in Model)
+            {
+                <li class="user-item" onclick="">
+                    @if(user.Attachment is null)
+                    {
+                        <img class="user-avatar" src="~/images/profile_image.jpg" alt="User Avatar">
+                    }
+                    else
+                    {
+                        <img class="user-avatar" src="~/images/@user.Attachment.Name" alt="User Avatar">
+                    }
+                    <div>
+                        <h5 style="padding-top:12%">@user.Firstname @user.Lastname</h5>
+                        <p>@user.Username</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="notes-container col-7" id="userNotes">
+        <div class="col-md-8">
             <div class="card">
-                @if (@user.Attachment is null)
-                {
-                    <img id="profile_img" src="~/images/profile_image.jpg" class="card-img-top" alt="User Avatar" width="256" height="256">
-                }
-                else
-                {
-                    <img id="profile_img" src="~/images/@user.Attachment.Name" class="card-img-top" alt="User Avatar" width="256" height="256">
-                }
                 <div class="card-body">
-                    <h5 class="card-title">@user.Firstname @user.Lastname</h5>
-                    <p class="card-text">@user.Username</p>
-                    <a href="@Url.Action("Login", "Users")" class="btn btn-primary">View Profile</a>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title">Notes</h5>
+                    <a asp-controller="Notes" asp-action="Create" asp-route-userId="@currentUser.Id" style="background-color:aqua" class="btn btn-primary">Create Note</a>
+                    </div>
+                    
+                    @if (currentUser.Notes != null && currentUser.Notes.Count > 0)
+                    {
+                        foreach (var note in currentUser.Notes)
+                        {
+                            <div class="note">
+                                <h6>@note.Title</h6>
+                                <p class="note-description">@note.Description.Substring(0, Math.Min(note.Description.Length, 85))...</p>
+                                <p class="note-details" style="display: none;">@note.Description</p>
+                                <a asp-action="details" asp-controller="notes" asp-route-id="@note.Id" class="btn btn-primary">Read more</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No notes available.</p>
+                    }
                 </div>
             </div>
         </div>
-    }
+    </div>
 </div>
+
+<style>
+
+    .main-container {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        flex: 1;
+    }
+
+    .users-container {
+        flex: 1;
+        scrollbar-width:thin;
+        width:50%;
+        scrollbar-color: grey;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #ccc;
+        overflow-y:scroll;
+    }
+
+    .user-list {
+        list-style: none;
+        padding: 0;
+        padding-left:4%;
+    }
+
+    .user-item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 0px;
+        transition: background-color 0.3s;
+    }
+
+    .user-item:hover {
+        background-color: #f2f2f2;
+    }
+
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .notes-container {
+        flex: 2;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .nav-bar {
+        padding: 10px;
+        display: flex;
+        height:10%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-title {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .btn {
+        border: none; 
+        color: grey; 
+        padding: 12px 16px;
+        font-size: 16px; 
+        cursor: pointer;
+    }
+
+</style>
+
+<script>
+    const instance = new mdb.Datatable(document.getElementById('users'), @Model)
+
+    document.getElementById('data-search').addEventListener('input', (e) => {
+        instance.input - group(e.target.value);
+    });
+</script>
